@@ -8,18 +8,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
+      
+    - name: Install jq (if not already installed)
+      run: |
+        sudo apt update
+        sudo apt install jq -y
 
     - name: Load parameters from JSON file
       id: load_params
       run: |
         echo "PARAM1=$(jq -r '.parameter1' config.json)" >> $GITHUB_ENV
         echo "PARAM2=$(jq -r '.parameter2' config.json)" >> $GITHUB_ENV
-
-    - name: Install jq (if not already installed)
-      run: |
-        sudo apt-get update
-        sudo apt-get install jq
 
     - name: Use the parameters
       run: |
