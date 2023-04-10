@@ -1,0 +1,27 @@
+name: Inputs from file test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  your_job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Load parameters from JSON file
+      id: load_params
+      run: |
+        echo "PARAM1=$(jq -r '.parameter1' config.json)" >> $GITHUB_ENV
+        echo "PARAM2=$(jq -r '.parameter2' config.json)" >> $GITHUB_ENV
+
+    - name: Install jq (if not already installed)
+      run: |
+        sudo apt-get update
+        sudo apt-get install jq
+
+    - name: Use the parameters
+      run: |
+        echo "Parameter 1: ${{ env.PARAM1 }}"
+        echo "Parameter 2: ${{ env.PARAM2 }}"
