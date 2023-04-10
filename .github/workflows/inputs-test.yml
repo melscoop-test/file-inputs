@@ -1,4 +1,4 @@
-name: Inputs from file test
+name: Inputs from YML test
 
 on:
   workflow_dispatch:
