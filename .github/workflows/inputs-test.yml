@@ -1,0 +1,22 @@
+name: Inputs from file test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  your_job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Load parameters from YAML file
+      id: load_params
+      run: |
+        echo "PARAM1=$(cat config.yml | grep parameter1 | cut -d ' ' -f 2)" >> $GITHUB_ENV
+        echo "PARAM2=$(cat config.yml | grep parameter2 | cut -d ' ' -f 2)" >> $GITHUB_ENV
+
+    - name: Use the parameters
+      run: |
+        echo "Parameter 1: ${{ env.PARAM1 }}"
+        echo "Parameter 2: ${{ env.PARAM2 }}"
